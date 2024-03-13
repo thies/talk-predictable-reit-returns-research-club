@@ -1,0 +1,368 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Predictable CRE Returns</title>
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="tweaks.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+
+					<section data-markdown data-background-image="imgs/door.jpg">
+						<textarea data-template>
+
+							## <span class='subtitle'>Kahshin Leow &amp; Thies Lindenthal<br><br></span>
+
+
+							## How Predictable<br>are CRE Returns?
+
+							<br>
+
+							## <span class='subtitle'>Cambridge Research Club, March 2024</span>
+
+							<br><br>
+							<img src='imgs/logo.png' width=400>
+
+						</textarea>
+					</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+		## Empirical Research Landscape
+		<div class='figure'>
+			       <img src="imgs/complexity-figure.svg" height="600">
+		</div>
+	</textarea>
+</section>
+
+
+					<section data-markdown>
+						<textarea data-template>
+							## Empirical asset pricing<span class='subtitle'><br>Can Machine Learning algorithms find (a bit of) return predictability?</span>
+
+							* Wide repertoire of machine learning methods benchmarked against more traditional techniques
+								- US stock returns: <a href='https://doi.org/10.1093/rfs/hhaa009'>Gu, Kelly, Xiu (2020)</a>
+								- bond returns: <a href="https://doi.org/10.1093/rfs/hhaa062">Bianchi, Buchner, Tamoni (2021)</a>
+								- Chinese stock returns: <a href='https://doi.org/10.1016/j.jfineco.2021.08.017'>Leippold, Wang, Zhou (2021), JFE</a>
+
+						</textarea>
+					</section>
+
+
+					<section data-markdown>
+						<textarea data-template>
+							## US Stock Markets<span class='subtitle'><br>Probably one of the toughest markets to find predictability?</span>
+
+							<div class='figure'>
+								<p class='title'><a href='https://doi.org/10.1093/rfs/hhaa009'>Gu, Kelly, Xiu (2020)</a>: Monthly out-of-sample stock-level prediction performance (percentage $R^{2}_{oos}$)</p>
+								<img src='imgs/gu-fig-1.png' height=400>
+							</div>
+
+						</textarea>
+					</section>
+
+
+
+
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+							## The Contenders<span class='subtitle'><br>(jargon cheat sheet)</span>
+
+							* Frequently spotted approaches
+								- <mark>OLS</mark> ordinary least squares and similar linear models
+								- <mark>PCR</mark> principle component regression
+								- <mark>LASSO</mark> least absolute shrinkage and selection operator
+								- <mark>ENet</mark> elastic net
+								- <mark>RF</mark> random forest
+								- <mark>GBRT</mark> gradient boosted regression trees
+								- <mark>ERT</mark> extremely randomized trees
+								- <mark>NN</mark> neural networks, typically with 1–5 layers
+							* We will later also use OLS with fewer predictors
+								- <mark>OLS-2</mark> only size and book-to-market
+								- <mark>OLS-3</mark> size, book-to-market and momentum
+
+						</textarea>
+					</section>
+
+
+										<section data-markdown>
+											<textarea data-template>
+													## performance metric
+
+													* Compare out-of-sample predictive power <br> `$$R_{oos,S}^{2}=1-\frac{\Sigma_{(i,t)\in\mathcal{T}}(r_{i,t+1}-\hat{r}_{i,t+1}^{(S)})^{2}}{ \Sigma_{(i,t)\in\mathcal{T}} r_{i,t+1}^2}$$`
+
+													</textarea>
+												</section>
+					</section>
+
+
+					<section data-markdown>
+						<textarea data-template>
+							## Chinese Stock Returns<span class='subtitle'><br>Predictability found to be order of magnitude higher</span>
+
+							<div class='figure'>
+								<p class='title'><a href='https://doi.org/10.1016/j.jfineco.2021.08.017'>Leippold, Wang, Zhou (2021), JFE</a>: Monthly out-of-sample stock-level prediction performance (percentage $R^{2}_{oos}$)</p>
+								<img src='imgs/leippold.png'>
+							</div>
+
+						</textarea>
+					</section>
+
+
+					<section data-markdown>
+						<textarea data-template>
+							## Bonds<span class='subtitle'><br>Predictability high for bonds, too</span>
+
+							<div class='figure'>
+								<p class='title'><a href="https://doi.org/10.1093/rfs/hhaa062">Bianchi, Buchner, Tamoni (2021)</a>: Out-of-sample stock-level prediction performance (percentage $R^{2}_{oos}$)</p>
+								<img src='imgs/bianchi.png' height='400'>
+							</div>
+
+						</textarea>
+					</section>
+
+
+
+
+
+<section data-markdown>
+	<textarea data-template>
+
+		## REIT Return predictability <span class='subtitle'><br></span>
+
+		<div class='figure'>
+			<img src='imgs/table-1.png' height=500>
+		</div>
+	</textarea>
+</section>
+
+
+<section data-markdown data-background-image='imgs/new-space.jpg'>
+	<textarea data-template>
+		## Data<span class='subtitle'><br> US REITs, Jan 1990–Dec 2021</span>
+
+		* CRSP monthly returns for all REITs on NYSE, AMEX &amp; NASDAQ: 486 unique REITs <br>`$$ z_{i,t}= \begin{pmatrix}
+			c_{i,t}\\
+			x_{t} \otimes c_{i,t}\\
+			d_{i,t}
+			\end{pmatrix}
+			$$`
+		* Predictors/covariates/features
+			- 94 variables documented in Green et al. (2017) of which 61 are updated annually, 13 are updated quarterly, and 20 are updated monthly.
+			- 17 dummies based on first two digits of SIC code
+		* Interactions with eight macroeconomic predictors following the variable definitions from Welch and Goyal (2008)
+			- dividend-to-price ratio (dp), earnings-to-price ratio (ep), book-to-market ratio (bm), net equity expansion (ntis), Treasury-bill rate (tbl), term spread (tms), default spread (dfy), stock variance (svar)
+		<br><br><br>
+	</textarea>
+</section>
+
+
+<section>
+
+<section data-markdown>
+	<textarea data-template>
+		## Predictability, by year <span class="subtitle"><br>Machine "Learning": Lessons from GFC incorporated?</span>
+		<div class='figure'>
+			       <img src="imgs/roos-by-year.png" height="450">
+		</div>
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+
+		## Predictability, by year<span class='subtitle'><br>Is performance driven by a few (freak) years? 2007 bad across the board, 2008 mixed</span>
+
+		<div class='figure'>
+			<img src='imgs/table-2a.png' height=500>
+		</div>
+	</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+
+		## Predictability, 2015–2021 <span class='subtitle'><br>Relatively consistent patterns</span>
+
+		<div class='figure'>
+			<img src='imgs/table-2b.png' height=500>
+		</div>
+	</textarea>
+</section>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+
+		## Predictability by property type<span class='subtitle'><br>Returns of diversified REIT the most difficult to predict</span>
+
+		<div class='figure'>
+			<img src='imgs/table-5.png' height=500>
+		</div>
+	</textarea>
+</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+
+		## Size effects <span class='subtitle'><br>Returns of large REITs are more predictable predict (like large stocks in Gu et al.)</span>
+
+		<div class='figure'>
+			<img src='imgs/table-4.png' height=500>
+		</div>
+	</textarea>
+</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+
+		## Portfolio performance<span class='subtitle'><br>Long positions in top 30% REITs</span>
+
+		<div class='figure'>
+			<img src='imgs/fig-2a.png' height=500>
+		</div>
+	</textarea>
+</section>
+
+
+
+<section data-markdown>
+	<textarea data-template>
+
+		## Mean-variance optimisation<span class='subtitle'><br>Allen et al (2019) show that mean-variance portfolios benefits from predictability</span>
+
+		* Markowitz (1953) states that <mark>“we must have procedures for finding reasonable `$\mu_i$` and `$σ_{i,j}$`. These procedures [...] should combine statistical techniques and the judgment of practical men&rdquo;</mark>.
+
+		<div class='figure'>
+			<img src='imgs/table-10a.svg' height=400>
+		</div>
+	</textarea>
+</section>
+
+
+
+
+<section data-markdown>
+	<textarea data-template>
+
+		## Mean-variance optimisation<span class='subtitle'><br>... with predictability and short selling</span>
+
+		<div class='figure'>
+			<img src='imgs/table-10b.png' height=500>
+		</div>
+	</textarea>
+</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+
+		## Prediction horizons<span class='subtitle'><br>How far can we push it? (Not my favourite slide)</span>
+
+		<div class='figure'>
+			<img src='imgs/table-11.png' height=500>
+		</div>
+	</textarea>
+</section>
+
+
+<section data-markdown>
+	<textarea data-template>
+
+		## Which features matter most?<span class='subtitle'><br>Reliable in time?</span>
+
+		<div class='figure'>
+			<img src='imgs/feature-importance.png' height=500>
+		</div>
+	</textarea>
+</section>
+
+
+
+<section data-markdown>
+	<textarea data-template>
+
+		## Reduced predictor sets<span class='subtitle'><br></span>
+
+		<div class='figure'>
+			<img src='imgs/reduced-set.png' height=300>
+		</div>
+	</textarea>
+</section>
+
+
+
+<section data-markdown>
+	<textarea data-template>
+
+		## Missing data (side track)<span class='subtitle'><br>Missing values impair predictions. Sparsity aware algorithms preserve data.</span>
+
+		<div class='figure'>
+			<img src='imgs/nan.png' height=500>
+		</div>
+	</textarea>
+</section>
+
+
+
+<section data-markdown>
+	<textarea data-template>
+
+		## <span class='subtitle'><br></span>
+
+		<div class='figure'>
+			<img src='imgs/table-1.png' height=500>
+		</div>
+	</textarea>
+</section>
+
+
+
+
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				transition: 'none',
+				width: 1244,
+				height: 700,
+				margin: 0.1,
+				math: {
+					mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+					config: 'TeX-AMS_HTML-full',
+					// pass other options into `MathJax.Hub.Config()`
+					TeX: { Macros: { RR: "{\\bf R}" } }
+				},
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath],
+				transition: 'none'
+			});
+		</script>
+	</body>
+</html>
